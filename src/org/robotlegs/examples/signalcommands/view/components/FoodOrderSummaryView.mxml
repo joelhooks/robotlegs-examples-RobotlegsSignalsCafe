@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="100%">
+	<fx:Script>
+		<![CDATA[
+			import org.robotlegs.examples.signalcommands.model.vo.FoodOrder;
+			
+			[Bindable]
+			public var order:FoodOrder;
+		]]>
+	</fx:Script>
+	<s:Label fontWeight="bold" textAlign="right" id="totalCost" width="100%" text="order total: ${(order ? order.totalCost.toFixed(2) : '0.00')}"/>
+</s:HGroup>

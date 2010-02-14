@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true" width="100%" height="56">
+	<s:layout>
+		<s:HorizontalLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import org.robotlegs.examples.signalcommands.model.vo.FoodItem;
+			
+			[Bindable]
+			protected var foodItem:FoodItem;
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				foodItem = value as FoodItem;
+			}
+		]]>
+	</fx:Script>
+	<mx:Image width="56" source="{foodItem.icon}"/>
+	<s:HGroup width="100%" height="100%" verticalAlign="middle">
+		<s:Label width="100%" text="{foodItem.type}" textAlign="center"/>
+		<s:Label width="100%" text="{foodItem.quantity}" textAlign="center"/>
+		<s:Label width="100%" text="${foodItem.price.toFixed(2)}" textAlign="center"/>
+	</s:HGroup>
+</s:ItemRenderer>

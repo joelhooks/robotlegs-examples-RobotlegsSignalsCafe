@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="400">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import org.osflash.signals.Signal;
+			import org.robotlegs.examples.signalcommands.model.vo.FoodItem;
+			import org.robotlegs.examples.signalcommands.view.components.renderers.CurrentOrderItemRenderer;
+			import org.robotlegs.examples.signalcommands.view.components.skins.ItemListSkin;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			public var dataProvider:ArrayCollection;
+			
+			public var foodItemSelected:Signal = new Signal(FoodItem);
+			
+			public var removeOneItemClicked:Signal = new Signal(FoodItem);
+			
+			public var removeAllItemsClicked:Signal = new Signal(FoodItem);
+
+			protected function items_changeHandler(event:IndexChangeEvent):void
+			{
+				var item:FoodItem;
+				
+				if(event.newIndex < 0)
+					item = null;
+				else
+					item = dataProvider[event.newIndex] as FoodItem;
+				
+				foodItemSelected.dispatch(item);
+			}
+
+			protected function removeSingleItem_clickHandler(event:MouseEvent):void
+			{
+				removeOneItemClicked.dispatch(items.selectedItem);
+			}
+
+			protected function removeAllItem_clickHandler(event:MouseEvent):void
+			{
+				removeAllItemsClicked.dispatch(items.selectedItem);
+			}
+
+		]]>
+	</fx:Script>
+	<s:HGroup width="100%" gap="0" fontWeight="bold">
+		<s:Label width="56" text="Food" textAlign="center"/>
+		<s:Label width="100%" text="Name" textAlign="center"/>
+		<s:Label width="100%" text="Quantity" textAlign="center"/>
+		<s:Label width="100%" text="Unit Cost" textAlign="center"/>
+	</s:HGroup>
+	<s:Label 
+		width="100%" height="100%" 
+		verticalAlign="middle" textAlign="center"
+		text="Order some food!" 
+		fontSize="18" fontWeight="bold" 
+		includeInLayout="{!dataProvider}" visible="{!dataProvider}"/>
+	<s:List 
+		id="items" change="items_changeHandler(event)" alternatingItemColors="[#F6F6F6,#EEEEEE]"  
+		width="100%" height="100%" dataProvider="{dataProvider}" borderVisible="false"  
+		skinClass="org.robotlegs.examples.signalcommands.view.components.skins.ItemListSkin">
+		<s:layout>
+			<s:VerticalLayout gap="0" requestedMinRowCount="5" requestedRowCount="5"/>
+		</s:layout>
+	</s:List>
+	<s:HGroup width="100%" horizontalAlign="right" enabled="{items.selectedItem is FoodItem}">
+
+	</s:HGroup>
+</s:Group>

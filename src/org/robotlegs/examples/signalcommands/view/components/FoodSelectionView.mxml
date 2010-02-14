@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="100%">
+	<fx:Script>
+		<![CDATA[
+			import org.osflash.signals.Signal;
+			import org.robotlegs.examples.signalcommands.model.enums.FoodType;
+			
+			public var itemTypeAdded:Signal = new Signal(FoodType);
+			
+			protected function addFoodItem_clickHandler(event:MouseEvent):void
+			{
+				itemTypeAdded.dispatch(foodTypes.selectedItem);
+			}
+		]]>
+	</fx:Script>
+	<s:DropDownList 
+		id="foodTypes" 
+		width="100%"
+		dataProvider="{FoodType.cList}" 
+		selectedIndex="0" 
+		itemRenderer="org.robotlegs.examples.signalcommands.view.components.renderers.FoodTypeComboItemRenderer"/>
+	<s:Button 
+		id="addFoodItem" 
+		label="Add Some Food" 
+		click="addFoodItem_clickHandler(event)" 
+		enabled="{foodTypes.selectedItem != (null || FoodType.NONE)}"/>
+</s:HGroup>
